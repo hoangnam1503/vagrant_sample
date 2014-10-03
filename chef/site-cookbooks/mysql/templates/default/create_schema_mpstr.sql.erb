@@ -1,0 +1,186 @@
+-- phpMyAdmin SQL Dump
+-- version 4.1.12
+-- http://www.phpmyadmin.net
+--
+-- Host: 10.201.0.213
+-- Generation Time: Oct 01, 2014 at 03:29 PM
+-- Server version: 5.5.36-log
+-- PHP Version: 5.3.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `db_storage`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `application`
+--
+
+CREATE TABLE IF NOT EXISTS `application` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(50) DEFAULT NULL COMMENT 'アプリケーション名',
+  `app_sig_id` varchar(50) DEFAULT NULL COMMENT 'アプリケーション識別ID',
+  `app_key` varchar(50) DEFAULT NULL COMMENT 'キー',
+  `del_flg` tinyint(1) DEFAULT '0' COMMENT '削除フラグ',
+  `date_created` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '作成日付',
+  `date_updated` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '更新日付',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='アプリケーション' AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `application`
+--
+
+INSERT INTO `application` (`id`, `name`, `app_sig_id`, `app_key`, `del_flg`, `date_created`, `date_updated`) VALUES
+(3, 'モニプラfacebook', 'monipla_facebook', '20844d6b54af64867', 0, '2011-04-12 00:00:00', '2011-04-12 00:00:00'),
+(4, 'モニプラfacebook', 'monipla_facebook_seta', '268324e09c5fd487b7 ', 0, '2011-06-28 21:16:37', '2011-06-28 21:16:37'),
+(5, 'midorie', 'midorie', '268324e09c5fd487b7 ', 0, '2011-06-28 21:16:37', '2011-06-28 21:16:37');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `server_group`
+--
+
+CREATE TABLE IF NOT EXISTS `server_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(50) DEFAULT NULL COMMENT 'サーバグループ名',
+  `port` int(11) DEFAULT NULL COMMENT 'ポート',
+  `ssl_port` int(11) DEFAULT NULL COMMENT 'SSLポート',
+  `domain` varchar(50) DEFAULT NULL COMMENT 'ドメイン',
+  `max_volume` int(11) DEFAULT '0' COMMENT '最大容量（MB）',
+  `used_volume` int(11) DEFAULT '0' COMMENT '使用容量（MB）',
+  `savable_flg` tinyint(1) DEFAULT '1' COMMENT '新規保存可能',
+  `readable_flg` tinyint(1) DEFAULT '1' COMMENT '読み込み可能',
+  `del_flg` tinyint(1) DEFAULT '0' COMMENT '削除フラグ',
+  `date_created` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '作成日付',
+  `date_updated` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '更新日付',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='サーバグループID' AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `server_group`
+--
+
+INSERT INTO `server_group` (`id`, `name`, `port`, `ssl_port`, `domain`, `max_volume`, `used_volume`, `savable_flg`, `readable_flg`, `del_flg`, `date_created`, `date_updated`) VALUES
+(1, 'グループ1', 80, 443, 'save.storage.local', 10000, 0, 1, 1, 0, '2011-04-12 00:00:00', '2013-12-03 17:55:07');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `server`
+--
+
+CREATE TABLE IF NOT EXISTS `server` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(50) DEFAULT NULL COMMENT 'サーバ名',
+  `server_group_id` int(11) DEFAULT NULL COMMENT 'サーバグループID',
+  `host` varchar(50) DEFAULT NULL COMMENT 'ホスト',
+  `directory` varchar(200) DEFAULT NULL COMMENT '保存ディレクトリ',
+  `ssh_user` varchar(50) DEFAULT NULL COMMENT 'SSHユーザ',
+  `ssh_key_path` varchar(200) DEFAULT NULL COMMENT 'SSHキーパス',
+  `del_flg` tinyint(1) DEFAULT '0' COMMENT '削除フラグ',
+  `date_created` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '作成日付',
+  `date_updated` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '更新日付',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='サーバ' AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `server`
+--
+
+INSERT INTO `server` (`id`, `name`, `server_group_id`, `host`, `directory`, `ssh_user`, `ssh_key_path`, `del_flg`, `date_created`, `date_updated`) VALUES
+(1, 'ストレージ1(localhost)', 1, '192.168.33.111', '/vagrant/storage/storage_root/', 'allied', '/var/www/.ssh/id_rsa', 0, '2011-02-28 16:46:28', '2011-02-28 16:46:28'),
+(2, 'ストレージ1(localhost)', 1, '192.168.33.112', '/vagrant/storage/storage_root2/', 'allied', '/var/www/.ssh/id_rsa', 0, '2011-02-28 16:46:28', '2011-02-28 16:46:28');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `temporary_file`
+--
+
+DROP TABLE IF EXISTS `temporary_file`;
+CREATE TABLE IF NOT EXISTS `temporary_file` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `file_id` bigint(20) DEFAULT NULL COMMENT 'ファイルID',
+  `expire` datetime DEFAULT NULL COMMENT '有効期限',
+  `del_flg` tinyint(1) DEFAULT '0' COMMENT '削除フラグ',
+  `date_created` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '作成日付',
+  `date_updated` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '更新日付',
+  PRIMARY KEY (`id`),
+  KEY `idx_1` (`file_id`),
+  KEY `idx_2` (`expire`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='一時ファイル' AUTO_INCREMENT=82815 ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unit`
+--
+
+DROP TABLE IF EXISTS `unit`;
+CREATE TABLE IF NOT EXISTS `unit` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `application_id` int(11) DEFAULT NULL COMMENT 'アプリケーションID',
+  `name` varchar(50) DEFAULT NULL COMMENT 'グループ名',
+  `max_volume` int(11) DEFAULT '0' COMMENT '最大容量（MB）',
+  `del_flg` tinyint(1) DEFAULT '0' COMMENT '削除フラグ',
+  `date_created` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '作成日付',
+  `date_updated` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '更新日付',
+  PRIMARY KEY (`id`),
+  KEY `idx_1` (`application_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='ユニット' AUTO_INCREMENT=1905 ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--
+-- Table structure for table `file`
+--
+
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE IF NOT EXISTS `file` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `application_id` int(11) DEFAULT NULL COMMENT 'アプリケーションID',
+  `unit_id` bigint(20) DEFAULT NULL COMMENT 'ユニットID',
+  `size` int(11) DEFAULT NULL COMMENT 'ファイルサイズ（Byte）',
+  `server_group_id` int(11) DEFAULT NULL COMMENT 'サーバグループID',
+  `path` varchar(200) DEFAULT NULL COMMENT '保管パス',
+  `del_flg` tinyint(1) DEFAULT '0' COMMENT '削除フラグ',
+  `date_created` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '作成日付',
+  `date_updated` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '更新日付',
+  PRIMARY KEY (`id`),
+  KEY `idx_1` (`application_id`),
+  KEY `idx_2` (`unit_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='ファイル' AUTO_INCREMENT=84881 ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

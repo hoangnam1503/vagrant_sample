@@ -1,0 +1,23 @@
+{
+  "apache": {
+  	"port":80,
+  	"server": {
+  		"api": "api.storage.local",
+  		"dest": "dest.storage.local",
+  		"save": "save.storage.local"
+  	},
+  	"docroot": {
+  		"api": "/vagrant/monipla2_storage/docroot_api",
+  		"dest": "/vagrant/monipla2_storage/docroot_dest",
+  		"save": "/vagrant/storage/storage_root"
+  	}
+  },
+  "run_list": [
+	"recipe[remi]",
+	"recipe[apache]",
+	"recipe[apache::mpstr]",
+	"recipe[mysql]",
+	"recipe[mysql::createdb_mpstr]",
+	"recipe[php]"
+  ]
+}

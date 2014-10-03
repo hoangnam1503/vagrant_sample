@@ -1,0 +1,29 @@
+# api
+<VirtualHost *:<%= node['apache']['port'] %>>
+    ServerName <%= node['apache']['server']['api'] %>
+    DocumentRoot <%= node['apache']['docroot']['api'] %>
+    <Directory "<%= node['apache']['docroot']['api'] %>">
+        AllowOverride All
+        Allow from All
+    </Directory>
+</VirtualHost>
+
+# dest
+<VirtualHost *:<%= node['apache']['port'] %>>
+    ServerName <%= node['apache']['server']['dest'] %>
+    DocumentRoot <%= node['apache']['docroot']['dest'] %>
+    <Directory "<%= node['apache']['docroot']['dest'] %>">
+        AllowOverride All
+        Allow from All
+    </Directory>
+</VirtualHost>
+
+# save
+<VirtualHost *:<%= node['apache']['port'] %>>
+    ServerName <%= node['apache']['server']['save'] %>
+    DocumentRoot <%= node['apache']['docroot']['save'] %>
+    <Directory "<%= node['apache']['docroot']['save'] %>">
+        AllowOverride All
+        Allow from All
+    </Directory>
+</VirtualHost>
